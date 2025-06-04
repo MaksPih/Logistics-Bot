@@ -1,10 +1,10 @@
+import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from aiogram.utils import executor
-from config import BOT_TOKEN
+from bot.config import BOT_TOKEN
 
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
 
 # Головне меню
 main_menu = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -17,14 +17,19 @@ main_menu.add(
     KeyboardButton("☎️ Зв’язок з менеджером")
 )
 
-@dp.message_handler(commands=['start'])
-async def send_welcome(message: types.Message):
-    await message.answer(
-        "Вас вітає логістична компанія!\n"
-        "Ми допоможемо вам з перевезенням вантажів.\n"
-        "Оберіть потрібну дію з меню нижче 👇",
-        reply_markup=main_menu
-    )
+@dp.message()
+async def start_handler(message: types.Message):
+    if message.text == "/start":
+        await message.answer(
+            "Вас вітає логістична компанія!\n"
+            "Оберіть дію з меню нижче 👇",
+            reply_markup=main_menu
+        )
 
-if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
+    dp.startup.register(lambda _: print("Бот запущено"))
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
