@@ -1,4 +1,5 @@
 import pytest
+import pytest_asyncio
 from unittest.mock import AsyncMock, patch
 from bot.services.maps import (get_per_km_rate, calculate_cost, build_static_map, get_route_data)
 
