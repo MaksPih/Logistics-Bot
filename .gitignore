@@ -1,19 +1,4 @@
-# Віртуальне середовище Python
-myenv/
 __pycache__/
-*.pyc
-
-# Конфіденційна інформація
+myenv/
 .env
-
-# Логи
-*.log
-
-# Файли IDE (Visual Studio Code)
-.vscode/
-
-# Docker (опційно, якщо не потрібно)
-*.pid
-
-# OS-specific
-.DS_Store
+orders.db
